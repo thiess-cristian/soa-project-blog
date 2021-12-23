@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "../components/Login"
 import AddPost from "../components/AddPost"
+import Post from "../components/Post"
 
 const routes = [
     {
@@ -13,6 +14,11 @@ const routes = [
         path: '/add_post',
         name: 'AddPost',
         component: AddPost
+    },
+    {
+        path: '/post',
+        name: 'Post',
+        component: Post
     }
 ]
 
