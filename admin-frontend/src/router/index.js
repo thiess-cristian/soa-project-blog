@@ -1,30 +1,29 @@
-import { createRouter, createWebHistory } from "vue-router";
-
-import Login from "../components/Login"
-import AddPost from "../components/AddPost"
-import Post from "../components/Post"
+import { createRouter, createWebHistory } from 'vue-router'
+import Posts from "../views/Posts.vue"
+import Login from "../views/Login.vue"
+import AddPost from "../views/AddPost.vue"
 
 const routes = [
-    {
-        path: '/',
-        name: 'Login',
-        component: Login
-    },
-    {
-        path: '/add_post',
-        name: 'AddPost',
-        component: AddPost
-    },
-    {
-        path: '/post',
-        name: 'Post',
-        component: Post
-    }
+  {
+    path: '/',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/add_post',
+    name: 'AddPost',
+    component: AddPost
+  },
+  {
+    path: '/posts',
+    name: 'Posts',
+    component: Posts
+  }
 ]
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes
+  history: createWebHistory(),
+  routes
 })
 
 export default router

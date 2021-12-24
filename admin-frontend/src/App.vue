@@ -1,24 +1,13 @@
 <template>
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-  />
-  <router-view />
+  <div>
+    <div id="nav">
+      <router-link to="/">Login</router-link> |
+      <router-link to="/add_post">Add post</router-link> |
+      <router-link to="/posts">Posts</router-link>
+    </div>
+    <router-view />
+  </div>
 </template>
 
-<script>
-export default {
-  name: "App",
-  components: {},
-};
-</script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
