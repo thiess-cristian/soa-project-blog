@@ -1,14 +1,21 @@
 import { Body, Controller, Get, Post, Param, Delete } from '@nestjs/common';
+import { triggerAsyncId } from 'async_hooks';
 import { PostService } from './post.service';
 
-@Controller('post')
+@Controller('posts')
 export class PostController {
 
     constructor(private readonly postService: PostService) { }
 
     @Post()
-    addPost(@Body("title") title: string, @Body("content") content: string) {
-        this.postService.addPost(title, content);
+    addPost(
+        @Body("title") title: string,
+        @Body("content") content: string,
+        @Body("author") author: string,
+        @Body("date") date: string,
+        @Body("tags") tags: string[]
+    ) {
+        this.postService.addPost(title, content, author, date, tags);
     }
 
     @Get(":id")

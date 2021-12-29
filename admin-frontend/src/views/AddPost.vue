@@ -1,33 +1,59 @@
 <template>
   <div class="columns">
     <div class="column is-6 is-offset-3">
-      <form action="" method="post">
+      <div class="box">
         <div class="field">
-          <label class="label">Title</label>
+          <span class="label">Title</span>
           <div class="control">
-            <input type="text" class="input" />
+            <input type="text" class="input" v-model="post.title" />
           </div>
         </div>
         <div class="field">
-          <lebel class="label">Content</lebel>
-          <textarea class="textarea" rows="12"></textarea>
+          <span class="label">Content</span>
+          <textarea
+            class="textarea"
+            rows="12"
+            v-model="post.content"
+          ></textarea>
         </div>
         <div class="field">
-          <label class="label">Tags</label>
+          <span class="label">Tags</span>
           <div class="control">
-            <input type="text" class="input" />
+            <input type="text" class="input" v-model="post.tags" />
           </div>
         </div>
         <div class="field">
-          <button class="button is-primary">Submit</button>
+          <button class="button is-primary" @click="submitPost">Submit</button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  name: "AddPost",
+  data() {
+    return {
+      post: {},
+    };
+  },
+  methods: {
+    submitPost() {
+      this.post.tags = this.post.tags.trim().split(",");
+      axios
+        .post("/posts", this.post)
+        .then((response) => {
+          //console.log(response);
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+        });
+    },
+  },
+};
 </script>
 
 <style>

@@ -8,8 +8,22 @@ export class PostService {
 
     constructor(@InjectModel(Post.name) private readonly postModel: Model<PostDocument>) { }
 
-    async addPost(title: string, content: string) {
-        return new this.postModel({ title: title, content: content }).save();
+    async addPost(
+        title: string,
+        content: string,
+        author: string,
+        date: string,
+        tags: string[]
+    ) {
+        return new this.postModel(
+            {
+                title: title,
+                content: content,
+                author: author,
+                date: date,
+                tags: tags
+            }
+        ).save();
     }
 
     async getPost(id: string) {

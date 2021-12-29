@@ -3,24 +3,20 @@
     <div class="column is-6 is-offset-3">
       <div class="box">
         <div class="block">
-          <h1 class="title">Title</h1>
+          <h1 class="title">{{ title }}</h1>
         </div>
         <div class="columns">
-          <div class="column has-text-grey">by x</div>
+          <div class="column has-text-grey">by {{ author }}</div>
           <div class="column has-text-grey">12/12/32 12:34</div>
         </div>
         <div class="block">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
-          voluptatem harum praesentium quas voluptatibus nostrum debitis totam
-          tempore, et dolor unde incidunt hic recusandae ipsa facilis quaerat
-          quod sequi nulla?
+          {{ content }}
         </div>
         <div class="block">
           <div class="tags">
-            <span class="tag">tag </span>
-            <span class="tag">tag </span>
-            <span class="tag">tag </span>
-            <span class="tag">tag </span>
+            <span class="tag" v-for="tag in tags" :key="tag">
+              {{ tag }}
+            </span>
           </div>
         </div>
       </div>
@@ -31,6 +27,13 @@
 <script>
 export default {
   name: "Post",
+  props: {
+    title: String,
+    content: String,
+    author: String,
+    date: String,
+    tags: Array,
+  },
 };
 </script>
 
