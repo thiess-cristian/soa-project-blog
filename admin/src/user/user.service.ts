@@ -10,8 +10,12 @@ export class UserService {
 
     }
 
-    async addUser(username: string, password: string) {
-        return new this.userModel({ username: username, password: password }).save();
+    async addUser(email: string, password: string, name: string, surname: string): Promise<User> {
+        return new this.userModel({ email, password, name, surname }).save();
+    }
+
+    async findOne(condition: any): Promise<User> {
+        return this.userModel.findOne(condition);
     }
 
     async getAllUsers() {
