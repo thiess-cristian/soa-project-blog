@@ -49,7 +49,8 @@ export class UserController {
         response.cookie('jwt', jwt, { httpOnly: true });
 
         return {
-            message: 'success'
+            message: 'success',
+            token: jwt
         };
     }
 
@@ -64,16 +65,10 @@ export class UserController {
     @Get()
     async getAllUsers(@Req() request: Request) {
 
-        console.log("users")
-
         try {
             const cookie = request.cookies['jwt'];
 
-            console.log(cookie)
-
             const data = await this.jwtService.verifyAsync(cookie);
-
-            console.log(data)
 
             if (!data) {
                 throw new UnauthorizedException("no cookie");

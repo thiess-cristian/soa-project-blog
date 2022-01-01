@@ -3,30 +3,67 @@
     <div class="column is-4 is-offset-4">
       <div class="box">
         <h1 class="title">Log in</h1>
-        <form action="" method="post">
-          <div class="field">
-            <label class="label">Username</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="Username" />
-            </div>
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input
+              v-model="loginData.email"
+              class="input"
+              type="text"
+              placeholder="Email"
+            />
           </div>
-          <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-              <input class="input" type="password" placeholder="Password" />
-            </div>
+        </div>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input
+              v-model="loginData.password"
+              class="input"
+              type="password"
+              placeholder="Password"
+            />
           </div>
-          <div class="field">
-            <button class="button is-primary">Log in</button>
-          </div>
-        </form>
+        </div>
+        <div class="field">
+          <button @click="login" class="button is-primary">Log in</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  name: "Login",
+  data() {
+    return {
+      loginData: {},
+    };
+  },
+  methods: {
+    login() {
+      axios
+        .post("/users/login", this.loginData)
+        .then((response) => {
+          const token = response.data.token;
+
+          this.$store.commit("setToken", token);
+
+          axios.defaults.headers.common["Authorization"] = "Token " + token;
+
+          localStorage.setItem("token", token);
+
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+};
 </script>
 
 <style>
