@@ -5,10 +5,6 @@ export type PostDocument = Post & Document;
 
 @Schema()
 export class Post {
-
-    @Prop()
-    id: number;
-
     @Prop()
     content: string;
 

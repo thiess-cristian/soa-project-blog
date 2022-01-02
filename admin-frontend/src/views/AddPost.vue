@@ -47,6 +47,7 @@ export default {
         .post("/posts", this.post)
         .then((response) => {
           //console.log(response);
+          this.$router.push("/posts");
         })
         .catch((error) => {
           console.log(JSON.stringify(error));

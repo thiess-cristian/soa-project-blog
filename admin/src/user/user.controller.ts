@@ -68,6 +68,8 @@ export class UserController {
         try {
             const cookie = request.cookies['jwt'];
 
+            console.log(cookie)
+
             const data = await this.jwtService.verifyAsync(cookie);
 
             if (!data) {

@@ -3,8 +3,20 @@
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
         <router-link to="/" class="navbar-item"> Home </router-link>
-        <router-link to="/posts" class="navbar-item"> Posts </router-link>
-        <router-link to="/add_post" class="navbar-item"> Add post </router-link>
+        <router-link
+          v-if="$store.state.isAuthenticated"
+          to="/posts"
+          class="navbar-item"
+        >
+          Posts
+        </router-link>
+        <router-link
+          v-if="$store.state.isAuthenticated"
+          to="/add_post"
+          class="navbar-item"
+        >
+          Add post
+        </router-link>
       </div>
 
       <div class="navbar-end">

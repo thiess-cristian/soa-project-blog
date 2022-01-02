@@ -1,7 +1,13 @@
 <template>
   <div class="posts" v-if="loaded">
     <div v-for="post in posts" :key="post._id">
-      <Post :title="post.title" :tags="post.tags" :content="post.content" />
+      <Post
+        :id="post._id"
+        :title="post.title"
+        :tags="post.tags"
+        :content="post.content"
+        @wasDeleted="getPosts"
+      />
     </div>
   </div>
 </template>
@@ -29,6 +35,7 @@ export default {
       axios
         .get("/posts/")
         .then((response) => {
+          this.posts = [];
           for (let i = 0; i < response.data.length; i++) {
             this.posts.push(response.data[i]);
           }

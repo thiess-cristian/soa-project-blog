@@ -46,7 +46,10 @@ export default {
   methods: {
     login() {
       axios
-        .post("/users/login", this.loginData)
+        .post("/users/login", this.loginData, {
+          withCredentials: true,
+          credentials: "include",
+        })
         .then((response) => {
           const token = response.data.token;
 

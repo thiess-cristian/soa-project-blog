@@ -5,6 +5,7 @@ import AddPost from "../views/AddPost.vue"
 import SignUp from "../views/SignUp.vue"
 import Home from "../views/Home.vue"
 
+import store from "../store"
 const routes = [
   {
     path: '/',
@@ -24,12 +25,18 @@ const routes = [
   {
     path: '/add_post',
     name: 'AddPost',
-    component: AddPost
+    component: AddPost,
+    meta: {
+      requireLogin: true
+    }
   },
   {
     path: '/posts',
     name: 'Posts',
-    component: Posts
+    component: Posts,
+    meta: {
+      requireLogin: true
+    }
   }
 ]
 
@@ -37,5 +44,13 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
-
+/*
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requireLogin) && !store.state.isAuthenticated) {
+    next('/login')
+  } else {
+    next()
+  }
+})
+*/
 export default router

@@ -2,8 +2,9 @@
   <div class="columns">
     <div class="column is-6 is-offset-3">
       <div class="box">
-        <div class="block">
+        <div class="block is-flex is-justify-content-space-between">
           <h1 class="title">{{ title }}</h1>
+          <button @click="deletePost" class="delete is-large"></button>
         </div>
         <div class="columns">
           <div class="column has-text-grey">by {{ author }}</div>
@@ -25,14 +26,37 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Post",
   props: {
+    id: String,
     title: String,
     content: String,
     author: String,
     date: String,
     tags: Array,
+  },
+  data() {
+    return {
+      isAuthenticated: false,
+    };
+  },
+  mounted() {
+    this.isAuthenticated = this.$store.state.isAuthenticated;
+  },
+  methods: {
+    async deletePost() {
+      await axios
+        .delete(`/posts/${this.id}`)
+        .then((response) => {
+          this.$emit("wasDeleted");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>

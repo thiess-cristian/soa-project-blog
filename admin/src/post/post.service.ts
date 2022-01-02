@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Post, PostDocument } from './post.model';
+const mongoDb = require("mongodb");
 
 @Injectable()
 export class PostService {
@@ -27,7 +28,7 @@ export class PostService {
     }
 
     async getPost(id: string) {
-        return this.postModel.findOne({ id });
+        return this.postModel.findOne({ _id: new mongoDb.ObjectId(id) });
     }
 
     async getAllPosts() {
@@ -35,6 +36,6 @@ export class PostService {
     }
 
     async deletePost(id: string) {
-        this.postModel.deleteOne({ id });
+        await this.postModel.deleteOne({ _id: new mongoDb.ObjectId(id) });
     }
 }
