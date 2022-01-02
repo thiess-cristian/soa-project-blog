@@ -43,6 +43,10 @@ export default {
   methods: {
     submitPost() {
       this.post.tags = this.post.tags.trim().split(",");
+      this.post.author = this.$store.state.user.username;
+      console.log(this.post.author);
+      const date = new Date();
+      this.post.date = date.toDateString();
       axios
         .post("/posts", this.post)
         .then((response) => {

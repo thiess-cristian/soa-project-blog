@@ -46,14 +46,13 @@ export default {
   methods: {
     login() {
       axios
-        .post("/users/login", this.loginData, {
-          withCredentials: true,
-          credentials: "include",
-        })
+        .post("/users/login", this.loginData)
         .then((response) => {
           const token = response.data.token;
 
           this.$store.commit("setToken", token);
+          const username = response.data.username;
+          this.$store.commit("setUsername", username);
 
           axios.defaults.headers.common["Authorization"] = "Token " + token;
 

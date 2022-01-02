@@ -6,6 +6,8 @@
         :title="post.title"
         :tags="post.tags"
         :content="post.content"
+        :author="post.author"
+        :date="post.date"
         @wasDeleted="getPosts"
       />
     </div>

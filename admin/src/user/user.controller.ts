@@ -48,9 +48,12 @@ export class UserController {
 
         response.cookie('jwt', jwt, { httpOnly: true });
 
+        const username = user.name + " " + user.surname;
+
         return {
             message: 'success',
-            token: jwt
+            token: jwt,
+            username: username
         };
     }
 

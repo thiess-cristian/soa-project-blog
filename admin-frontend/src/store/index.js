@@ -26,6 +26,12 @@ export default createStore({
       state.token = ''
       state.isAuthenticated = false
     },
+    setUsername(state, username) {
+      state.user.username = username
+    },
+    getUsername(state) {
+      return state.user.username;
+    }
   },
   actions: {
   },

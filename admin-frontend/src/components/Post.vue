@@ -8,7 +8,7 @@
         </div>
         <div class="columns">
           <div class="column has-text-grey">by {{ author }}</div>
-          <div class="column has-text-grey">12/12/32 12:34</div>
+          <div class="column has-text-grey">{{ date }}</div>
         </div>
         <div class="block">
           {{ content }}

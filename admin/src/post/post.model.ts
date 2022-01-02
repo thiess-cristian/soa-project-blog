@@ -12,7 +12,7 @@ export class Post {
     title: string
 
     @Prop()
-    creator: string
+    author: string
 
     @Prop()
     date: string
