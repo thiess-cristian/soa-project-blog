@@ -5,9 +5,11 @@ import { AppService } from './app.service';
 import { PostModule } from './post/post.module';
 import { UserModule } from './user/user.module';
 
+const mongoUrl = process.env.MONGO_URL ? process.env.MONGO_URL : "mongodb://localhost:27017/blog"
+
 @Module({
   imports: [
-    MongooseModule.forRoot("mongodb://localhost:27017/blog"),
+    MongooseModule.forRoot(mongoUrl),
     PostModule,
     UserModule],
   controllers: [AppController],
