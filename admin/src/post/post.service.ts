@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ClientOptions, ClientProxy, Transport, ClientProxyFactory } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Post, PostDocument } from './post.model';
@@ -7,7 +8,19 @@ const mongoDb = require("mongodb");
 @Injectable()
 export class PostService {
 
-    constructor(@InjectModel(Post.name) private readonly postModel: Model<PostDocument>) { }
+    private microservicesOptions: ClientOptions = {
+        transport: Transport.TCP,
+        options: {
+            host: "127.0.0.1",
+            port: 3005
+        }
+    }
+
+    private clientProxy: ClientProxy;
+
+    constructor(@InjectModel(Post.name) private readonly postModel: Model<PostDocument>) {
+        this.clientProxy = ClientProxyFactory.create(this.microservicesOptions);
+    }
 
     async addPost(
         title: string,
@@ -16,23 +29,15 @@ export class PostService {
         date: string,
         tags: string[]
     ) {
-        return new this.postModel(
-            {
-                title: title,
-                content: content,
-                author: author,
-                date: date,
-                tags: tags
-            }
-        ).save();
+        return this.clientProxy.send<any>("add_post", { title, content, author, date, tags });
     }
 
     async getPost(id: string) {
-        return this.postModel.findOne({ _id: new mongoDb.ObjectId(id) });
+        return this.clientProxy.send<string>("get_post", id);
     }
 
     async getAllPosts() {
-        return this.postModel.find().exec();
+        return this.clientProxy.send<any>("get_posts", "");
     }
 
     async deletePost(id: string) {

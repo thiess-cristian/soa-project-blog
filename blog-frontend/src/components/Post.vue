@@ -48,7 +48,7 @@ export default {
     };
   },
   mounted() {
-    this.isAuthenticated = this.$store.state.isAuthenticated;
+    this.isAuthenticated = false;
   },
   methods: {
     async deletePost() {
