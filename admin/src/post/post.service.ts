@@ -5,13 +5,15 @@ import { Model } from 'mongoose';
 import { Post, PostDocument } from './post.model';
 const mongoDb = require("mongodb");
 
+const host = process.env.POSTS_MICROSERVICE ? process.env.POSTS_MICROSERVICE : "localhost"
+
 @Injectable()
 export class PostService {
 
     private microservicesOptions: ClientOptions = {
         transport: Transport.TCP,
         options: {
-            host: "127.0.0.1",
+            host: host,
             port: 3005
         }
     }

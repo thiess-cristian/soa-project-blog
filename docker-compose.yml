@@ -5,6 +5,20 @@ services:
     ports:
       - "27017:27017"
 
+  posts:
+    container_name: posts
+    image: posts
+    build:
+      context: ./posts-microservice
+      dockerfile: Dockerfile
+    volumes:
+      - ./posts-microservice:/usr/src/app
+    ports:
+      - 3005:3005
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/blog
+      - POSTS_MICROSERVICE=posts
+
   server:
     container_name: admin
     image: admin
@@ -17,8 +31,10 @@ services:
       - 3000:3000
     depends_on:
       - mongo
+      - posts
     environment:
       - MONGO_URL=mongodb://mongo:27017/blog
+      - POSTS_MICROSERVICE=posts
 
   client:
     container_name: admin-frontend

@@ -5,10 +5,12 @@ import { AppModule } from './app.module';
 
 const logger = new Logger("Main");
 
+const host = process.env.POSTS_MICROSERVICE ? process.env.POSTS_MICROSERVICE : "localhost"
+
 const microservicesOptions = {
   transport: Transport.TCP,
   options: {
-    host: "127.0.0.1",
+    host: host,
     port: 3005
   }
 }
