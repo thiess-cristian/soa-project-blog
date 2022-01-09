@@ -1,7 +1,10 @@
 <template>
-  <div class="filters">
-    <div class="tag" v-for="tag in tags" :key="tag">
-      <FilterOption :tag="tag" />
+  <div class="filters box">
+    <div class="title">Tags:</div>
+    <div class="is-flex is-flex-direction-column">
+      <div v-for="tag in tags" :key="tag">
+        <FilterOption :tag="tag" @checkboxWasClicked="addFilter(tag)" />
+      </div>
     </div>
   </div>
 </template>
@@ -16,6 +19,7 @@ export default {
   data() {
     return {
       tags: [],
+      selectedTags: [],
     };
   },
   mounted() {
@@ -30,10 +34,22 @@ export default {
           this.tags = [];
           for (let i = 0; i < response.data.length; i++) {
             this.tags.push(response.data[i]);
-            console.log(response);
           }
+          this.tags = [...new Set(this.tags)];
         })
         .catch((error) => console.log(error));
+    },
+
+    addFilter(tag) {
+      if (this.selectedTags.includes(tag)) {
+        const index = this.selectedTags.indexOf(tag);
+        if (index > -1) {
+          this.selectedTags.splice(index, 1);
+        }
+      } else {
+        this.selectedTags.push(tag);
+      }
+      this.$emit("checkedFilters", this.selectedTags);
     },
   },
 };

@@ -9,7 +9,6 @@ export class FilterController {
 
     @Get()
     async getTags() {
-        console.log("gettags")
         return this.filterService.getTags();
     }
 

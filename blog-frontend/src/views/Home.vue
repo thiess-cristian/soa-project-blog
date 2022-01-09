@@ -1,7 +1,9 @@
 <template>
   <div class="columns">
-    <Filter />
-    <div class="column is-6 is-offset-3">
+    <div class="column is-1 is-offset-1">
+      <Filter @checkedFilters="filterPosts" />
+    </div>
+    <div class="column is-6 is-offset-1">
       <div class="posts" v-if="loaded">
         <Post
           v-for="post in posts"
@@ -41,6 +43,24 @@ export default {
       await axios
         .get("posts")
         .then((response) => {
+          this.posts = [];
+          for (let i = 0; i < response.data.length; i++) {
+            this.posts.push(response.data[i]);
+          }
+          this.loaded = true;
+        })
+        .catch((error) => console.log(error));
+    },
+
+    async filterPosts(tags) {
+      axios
+        .post("filter", { tags })
+        .then((response) => {
+          if (response.data.length == 0) {
+            this.getPosts();
+            return;
+          }
+
           this.posts = [];
           for (let i = 0; i < response.data.length; i++) {
             this.posts.push(response.data[i]);

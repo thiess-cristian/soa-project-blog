@@ -10,12 +10,12 @@ export class FilterController {
 
     @MessagePattern("get_tags")
     async getAllTags() {
-        console.log("get tags micro")
         return await this.filterService.getAllTags();
     }
 
     @MessagePattern("get_posts")
-    getPostsWithTags(tags: any) {
+    async getPostsWithTags(tags: any) {
+        console.log(await this.filterService.getPostsWithTags(tags))
         return this.filterService.getPostsWithTags(tags);
     }
 }

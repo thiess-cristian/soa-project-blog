@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ClientOptions, ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
+import { response } from 'express';
 
 const host = process.env.POSTS_MICROSERVICE ? process.env.POSTS_MICROSERVICE : "localhost"
 
@@ -21,29 +22,27 @@ export class FilterService {
     }
 
     async getPostsWithTags(tags: any) {
-        const posts = this.postMicroserviceProxy.send<any>("get_posts", "");
-        let selectedPosts = []
-
-        posts.forEach((post) => {
-            for (let tag in post) {
-                if (tags.includes(tag)) {
-                    selectedPosts.push(post)
-                    break;
+        /*
+        return this.postMicroserviceProxy.send<any>("get_posts", "").toPromise().then(response => {
+            response.flatMap(element => element
+            )
+        });
+        */
+        return this.postMicroserviceProxy
+            .send<any>("get_posts", "")
+            .toPromise()
+            .then(response => response.filter(element => {
+                for (let tag of tags) {
+                    if (element.tags.includes(tag)) {
+                        return element
+                    }
                 }
-            }
-        })
-
-        return selectedPosts;
+            }));
     }
     async getAllTags() {
-        let tags = []
-        this.postMicroserviceProxy.send<any>("get_posts", "").subscribe(response => {
-            response.forEach(element => {
-                element.tags.forEach(tag => {
-                    tags.push(tag)
-                })
-            });
-        });
-        return tags;
+        return this.postMicroserviceProxy
+            .send<any>("get_posts", "")
+            .toPromise()
+            .then(response => response.flatMap(element => element.tags));
     }
 }
