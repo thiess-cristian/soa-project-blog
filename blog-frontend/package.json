@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve2": "serve dist -p 3001",
+    "serve2": "serve dist -p 8081",
     "serve": "vue-cli-service serve",
     "build": "webpack --mode production",
     "clean": "rm -rf dist",

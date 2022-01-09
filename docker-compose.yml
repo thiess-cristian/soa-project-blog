@@ -19,7 +19,7 @@ services:
       - MONGO_URL=mongodb://mongo:27017/blog
       - POSTS_MICROSERVICE=posts
 
-  server:
+  admin:
     container_name: admin
     image: admin
     build:
@@ -35,8 +35,9 @@ services:
     environment:
       - MONGO_URL=mongodb://mongo:27017/blog
       - POSTS_MICROSERVICE=posts
+      - POSTS_MICROSERVICE_PORT=3005
 
-  client:
+  admin-frontend:
     container_name: admin-frontend
     image: admin-frontend
     build:
@@ -48,3 +49,33 @@ services:
       - 8080:8080
     depends_on:
       - server
+
+  blog:
+    container_name: blog
+    image: blog
+    build:
+      context: ./blog
+      dockerfile: Dockerfile
+    volumes:
+      - ./blog:/usr/src/app
+    ports:
+      - 3003:3003
+    depends_on:
+      - posts
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/blog
+      - POSTS_MICROSERVICE=posts
+      - POSTS_MICROSERVICE_PORT=3005
+
+  blog-frontend:
+    container_name: blog-frontend
+    image: blog-frontend
+    build:
+      context: ./blog-frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./blog-frontend:/app
+    ports:
+      - 8081:8081
+    depends_on:
+      - blog
