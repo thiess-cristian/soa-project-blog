@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 
 const logger = new Logger("Main");
 
-const host = process.env.FILTER_MICROSERVICE ? process.env.POSTS_MICROSERVICE : "localhost";
+const host = process.env.FILTER_MICROSERVICE ? process.env.FILTER_MICROSERVICE : "localhost";
 
 const microservicesOptions = {
   transport: Transport.TCP,

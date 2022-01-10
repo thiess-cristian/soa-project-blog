@@ -3,7 +3,7 @@ services:
     container_name: mongo
     image: mongo
     ports:
-      - "27017:27017"
+      - 27017:27017
 
   posts:
     container_name: posts
@@ -18,6 +18,20 @@ services:
     environment:
       - MONGO_URL=mongodb://mongo:27017/blog
       - POSTS_MICROSERVICE=posts
+
+  filter:
+    container_name: filter
+    image: filter
+    build:
+      context: ./filter-microservice
+      dockerfile: Dockerfile
+    volumes:
+      - ./filter-microservice:/usr/src/app
+    ports:
+      - 3006:3006
+    environment:
+      - POSTS_MICROSERVICE=posts
+      - FILTER_MICROSERVICE=filter
 
   admin:
     container_name: admin
@@ -35,7 +49,6 @@ services:
     environment:
       - MONGO_URL=mongodb://mongo:27017/blog
       - POSTS_MICROSERVICE=posts
-      - POSTS_MICROSERVICE_PORT=3005
 
   admin-frontend:
     container_name: admin-frontend
@@ -62,10 +75,11 @@ services:
       - 3003:3003
     depends_on:
       - posts
+      - filter
     environment:
       - MONGO_URL=mongodb://mongo:27017/blog
       - POSTS_MICROSERVICE=posts
-      - POSTS_MICROSERVICE_PORT=3005
+      - FILTER_MICROSERVICE=filter
 
   blog-frontend:
     container_name: blog-frontend
