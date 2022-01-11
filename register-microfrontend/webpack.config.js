@@ -12,6 +12,10 @@ module.exports = (env = {}) => ({
     },
     target: 'web',
     entry: path.resolve(__dirname, './src/main.js'),
+    // output: {
+    //   path: path.resolve(__dirname, './dist'),
+    //   publicPath: '/dist/'
+    // },
     output: {
         publicPath: 'auto',
     },
@@ -55,16 +59,17 @@ module.exports = (env = {}) => ({
             filename: '[name].css',
         }),
         new ModuleFederationPlugin({
-            name: 'layout',
+            name: 'registerFrontend',
             filename: 'remoteEntry.js',
             remotes: {
                 registerFrontend: 'registerFrontend@http://localhost:3015/remoteEntry.js',
             },
-            exposes: {},
+            exposes: {
+                './RegisterForm': './src/components/RegisterForm'
+            },
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './index.html'),
-            chunks: ['main'],
         }),
         new VueLoaderPlugin(),
     ],
@@ -73,7 +78,7 @@ module.exports = (env = {}) => ({
             directory: path.join(__dirname),
         },
         compress: true,
-        port: 8080,
+        port: 3015,
         hot: true,
         headers: {
             'Access-Control-Allow-Origin': '*',

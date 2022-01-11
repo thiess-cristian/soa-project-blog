@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <content-element />
+</template>
 
 <script>
 export default {};
