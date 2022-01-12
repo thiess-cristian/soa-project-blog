@@ -69,10 +69,12 @@ export default {
   },
   methods: {
     signUp() {
-      //axios.post("/users/register", this.userData).then((response) => {
-      //  this.$router.push("/login");
-      //});
-      this.$router.push("/login");
+      axios
+        .post("http://localhost:3000/users/register", this.userData)
+        .then((response) => {
+          console.log(response);
+          this.$router.push("/login");
+        });
     },
   },
 };

@@ -78,6 +78,7 @@ services:
       - 3015:3015
     depends_on:
       - mongo
+      - admin
     environment:
       - MICROFRONTED_URL=http://register-microfrontend:3015
 

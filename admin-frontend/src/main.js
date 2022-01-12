@@ -10,6 +10,6 @@ const RegisterForm = defineAsyncComponent(() => import('registerFrontend/Registe
 
 let app = createApp(App)
 
-app.component('content-element', RegisterForm);
+app.component('register-element', RegisterForm);
 
 app.use(store).use(router, axios).mount('#app')
