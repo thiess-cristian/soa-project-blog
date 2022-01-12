@@ -3,6 +3,9 @@ const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
+
+const remoteName = process.env.MICROFRONTED_URL ? process.env.MICROFRONTED_URL : "http://localhost:3015"
+
 module.exports = (env = {}) => ({
     mode: 'development',
     cache: false,

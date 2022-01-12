@@ -61,7 +61,25 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - server
+      - admin
+      - register-microfrontend
+    environment:
+      - MICROFRONTED_URL=http://register-microfrontend:3015
+
+  register-microfrontend:
+    container_name: register-microfrontend
+    image: register-microfrontend
+    build:
+      context: ./register-microfrontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./register-microfrontend:/app
+    ports:
+      - 3015:3015
+    depends_on:
+      - mongo
+    environment:
+      - MICROFRONTED_URL=http://register-microfrontend:3015
 
   blog:
     container_name: blog
