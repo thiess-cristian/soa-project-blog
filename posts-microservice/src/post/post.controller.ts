@@ -33,9 +33,4 @@ export class PostController {
         this.postService.deletePost(id);
     }
 
-    @MessagePattern("test")
-    test() {
-        console.log("test")
-    }
-
 }

@@ -7,6 +7,7 @@
         <input
           v-model="userData.name"
           class="input"
+          id="name"
           type="text"
           placeholder="Name"
         />
@@ -18,6 +19,7 @@
         <input
           v-model="userData.surname"
           class="input"
+          id="surname"
           type="text"
           placeholder="Surname"
         />
@@ -29,6 +31,7 @@
         <input
           v-model="userData.email"
           class="input"
+          id="email"
           type="text"
           placeholder="Email"
         />
@@ -40,6 +43,7 @@
         <input
           v-model="userData.password"
           class="input"
+          id="password"
           type="password"
           placeholder="Password"
         />
@@ -69,8 +73,17 @@ export default {
   },
   methods: {
     signUp() {
+      const name = document.getElementById("name").value;
+      const surname = document.getElementById("surname").value;
+      const password = document.getElementById("password").value;
+      const email = document.getElementById("email").value;
       axios
-        .post("http://localhost:3000/users/register", this.userData)
+        .post("http://localhost:3000/users/register", {
+          name,
+          surname,
+          password,
+          email,
+        })
         .then((response) => {
           console.log(response);
           this.$router.push("/login");
