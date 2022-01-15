@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <h1 class="title">Log in</h1>
+    <h1 class="title">Sign up</h1>
     <div class="field">
       <label class="label">Name</label>
       <div class="control">
